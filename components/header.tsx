@@ -21,7 +21,7 @@ export function Header({ isCollapsed, setIsCollapsed }: HeaderProps) {
     <motion.div
       initial={{ y: -50 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-10 bg-white dark:bg-[#1C2731] p-2 flex flex-col border-b dark:border-[#2C3740] transition-all duration-300"
+      className="w-full bg-white dark:bg-[#1C2731] p-2 flex flex-col border-b dark:border-[#2C3740] transition-all duration-300"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-1">

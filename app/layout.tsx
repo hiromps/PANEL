@@ -52,10 +52,14 @@ export default function RootLayout({
           enableSystem={true}
           storageKey="duolingo-theme"
         >
-          <div className="flex h-screen bg-background">
-            <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-            <main className={`flex-1 w-full overflow-y-auto transition-all duration-300 bg-gray-50 dark:bg-[#1C2731] ${!isCollapsed && !isMobile ? 'ml-64' : 'ml-0'}`}>
+          <div className="relative flex h-screen overflow-hidden bg-background">
+            <div className="fixed top-0 left-0 h-full z-20">
+              <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+            </div>
+            <div className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${!isCollapsed && !isMobile ? 'ml-64' : 'ml-0'}`}>
               <Header isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+            </div>
+            <main className={`flex-1 w-full overflow-y-auto transition-all duration-300 bg-gray-50 dark:bg-[#1C2731] ${!isCollapsed && !isMobile ? 'ml-64' : 'ml-0'}`}>
               <div className={`${isMobile ? 'pt-10' : 'pt-12'}`}>
                 {children}
               </div>

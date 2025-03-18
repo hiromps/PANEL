@@ -7,10 +7,23 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Clock, ShoppingCart, Package, Crown } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   return (
-    <div className="container mx-auto px-3 sm:px-6 lg:px-8 min-h-screen mt-12 sm:mt-16 pb-6">
+    <div className={`container mx-auto px-3 sm:px-6 lg:px-8 min-h-screen mt-12 sm:mt-16 pb-6 ${isSmallScreen ? '' : 'pr-3 sm:pr-6 lg:pr-8'}`}>
       {/* Service Type Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4 pt-1">
         <div className="h-full">
