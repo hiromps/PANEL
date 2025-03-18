@@ -10,37 +10,43 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="container mx-auto p-8 min-h-screen mt-24">
+    <div className="container mx-auto px-3 sm:px-6 lg:px-8 min-h-screen mt-12 sm:mt-16 pb-6">
       {/* Service Type Buttons */}
-      <div className="flex space-x-4 mb-8 pt-4">
-        <Link href="/new-order" className="flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4 pt-1">
+        <div className="h-full">
+          <Link href="/new-order" className="h-full w-full block">
+            <Button
+              variant="ghost"
+              className="w-full h-full flex items-center justify-center space-x-3 py-3 bg-white/50 dark:bg-white/5 backdrop-blur-sm hover:bg-blue-50 dark:hover:bg-blue-900/10 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm"
+            >
+              <ShoppingCart className="w-5 h-5 text-blue-500" />
+              <span className="font-medium text-gray-900 dark:text-white">新規注文</span>
+            </Button>
+          </Link>
+        </div>
+        <div className="h-full">
           <Button
             variant="ghost"
-            className="w-full flex items-center justify-center space-x-3 py-6 bg-white/50 dark:bg-white/5 backdrop-blur-sm hover:bg-blue-50 dark:hover:bg-blue-900/10 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm"
+            className="w-full h-full flex items-center justify-center space-x-3 py-3 bg-white/50 dark:bg-white/5 backdrop-blur-sm hover:bg-blue-50 dark:hover:bg-blue-900/10 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm"
           >
-            <ShoppingCart className="w-5 h-5 text-blue-500" />
-            <span className="font-medium text-gray-900 dark:text-white">新規注文</span>
+            <Package className="w-5 h-5 text-blue-500" />
+            <span className="font-medium text-gray-900 dark:text-white">大量注文</span>
           </Button>
-        </Link>
-        <Button
-          variant="ghost"
-          className="flex-1 flex items-center justify-center space-x-3 py-6 bg-white/50 dark:bg-white/5 backdrop-blur-sm hover:bg-blue-50 dark:hover:bg-blue-900/10 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm"
-        >
-          <Package className="w-5 h-5 text-blue-500" />
-          <span className="font-medium text-gray-900 dark:text-white">大量注文</span>
-        </Button>
-        <Button
-          variant="ghost"
-          className="flex-1 flex items-center justify-center space-x-3 py-6 bg-white/50 dark:bg-white/5 backdrop-blur-sm hover:bg-blue-50 dark:hover:bg-blue-900/10 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm"
-        >
-          <Crown className="w-5 h-5 text-blue-500" />
-          <span className="font-medium text-gray-900 dark:text-white">VIPステータス</span>
-        </Button>
+        </div>
+        <div className="h-full">
+          <Button
+            variant="ghost"
+            className="w-full h-full flex items-center justify-center space-x-3 py-3 bg-white/50 dark:bg-white/5 backdrop-blur-sm hover:bg-blue-50 dark:hover:bg-blue-900/10 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm"
+          >
+            <Crown className="w-5 h-5 text-blue-500" />
+            <span className="font-medium text-gray-900 dark:text-white">VIPステータス</span>
+          </Button>
+        </div>
       </div>
 
       {/* Search and Order Form */}
-      <Card className="p-6 bg-white/70 dark:bg-[#1E2538]/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700/50 rounded-lg">
-        <div className="space-y-6">
+      <Card className="p-3 sm:p-5 bg-white/70 dark:bg-[#1E2538]/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700/50 rounded-lg">
+        <div className="space-y-3 sm:space-y-5">
           <div>
             <Input
               type="search"
@@ -50,9 +56,9 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium mb-2">カテゴリー</h3>
+            <h3 className="text-base sm:text-lg font-medium mb-1">カテゴリー</h3>
             <Select>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="カテゴリーを選択" />
               </SelectTrigger>
               <SelectContent>
@@ -62,9 +68,9 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium mb-2">サービス</h3>
+            <h3 className="text-base sm:text-lg font-medium mb-1">サービス</h3>
             <Select>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="サービスを選択" />
               </SelectTrigger>
               <SelectContent>
@@ -74,7 +80,7 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium mb-2">リンク</h3>
+            <h3 className="text-base sm:text-lg font-medium mb-1">リンク</h3>
             <Input
               type="url"
               placeholder="リンクを入力"
@@ -83,7 +89,7 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium mb-2">数量</h3>
+            <h3 className="text-base sm:text-lg font-medium mb-1">数量</h3>
             <Input
               type="number"
               placeholder="最小: 10 - 最大: 20,000"
@@ -92,13 +98,13 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium mb-2">料金</h3>
-            <div className="bg-gray-50 dark:bg-[#2C3740] p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 className="text-base sm:text-lg font-medium mb-1">料金</h3>
+            <div className="bg-gray-50 dark:bg-[#2C3740] p-2 sm:p-3 rounded-lg border border-gray-200 dark:border-gray-700">
               $0.00
             </div>
           </div>
 
-          <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">
+          <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 text-base">
             注文する
           </Button>
         </div>

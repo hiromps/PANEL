@@ -7,7 +7,7 @@ import { Sidebar } from '@/components/sidebar';
 import { Header } from '@/components/header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from 'sonner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,6 +23,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 画面サイズを監視して、モバイルサイズかどうかを判定
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      // モバイルの場合は自動的にサイドバーを閉じる
+      if (window.innerWidth < 768) {
+        setIsCollapsed(true);
+      }
+    };
+
+    // 初期チェック
+    checkIfMobile();
+
+    // リサイズ時にチェック
+    window.addEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   return (
     <html lang="ja" suppressHydrationWarning>
@@ -35,9 +54,11 @@ export default function RootLayout({
         >
           <div className="flex h-screen bg-background">
             <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-            <main className="flex-1 w-full overflow-y-auto transition-all duration-300 bg-gray-50 dark:bg-[#1C2731]">
+            <main className={`flex-1 w-full overflow-y-auto transition-all duration-300 bg-gray-50 dark:bg-[#1C2731] ${!isCollapsed && !isMobile ? 'ml-64' : 'ml-0'}`}>
               <Header isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-              {children}
+              <div className={`${isMobile ? 'pt-10' : 'pt-12'}`}>
+                {children}
+              </div>
             </main>
           </div>
           <Toaster position="top-right" richColors />
