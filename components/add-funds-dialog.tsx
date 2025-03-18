@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'sonner';
+import { Wallet } from 'lucide-react';
 
 // テストキーでStripeを初期化
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -194,7 +195,10 @@ export function AddFundsDialog() {
       }
     }}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => setOpen(true)}>資金を追加</Button>
+        <div className="w-full flex items-center space-x-3 group">
+          <Wallet className="w-5 h-5 flex-shrink-0 text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors" />
+          <span className="text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">資金を追加</span>
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -248,14 +252,14 @@ export function AddFundsDialog() {
           </div>
           
           {errorMessage && (
-            <div className="text-red-500 text-sm bg-red-50 p-2 rounded border border-red-200 overflow-auto max-h-32">
+            <div className="bg-red-50 border border-red-200 text-red-700 p-2 rounded text-sm">
               {errorMessage}
             </div>
           )}
           
-          <Button
+          <Button 
             onClick={handleAddFunds}
-            disabled={isLoading || !amount || parseInt(amount) < 100}
+            disabled={isLoading}
             className="w-full"
           >
             {isLoading ? '処理中...' : '支払いへ進む'}

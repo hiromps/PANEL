@@ -68,14 +68,14 @@ export default function RootLayout({
               />
             )}
             
-            {/* サイドバー */}
-            <div className={`fixed top-0 left-0 h-full z-20 transition-all duration-300 ${isCollapsed && isMobile ? '-translate-x-full' : 'translate-x-0'}`}>
-              <Sidebar isCollapsed={isCollapsed} setIsCollapsed={toggleSidebar} />
-            </div>
-            
             {/* ヘッダー */}
             <div className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${!isCollapsed && !isMobile ? 'ml-64' : 'ml-0'}`}>
               <Header isCollapsed={isCollapsed} setIsCollapsed={toggleSidebar} />
+            </div>
+            
+            {/* サイドバー */}
+            <div className={`fixed top-0 left-0 h-full z-20 transition-all duration-300 ${isCollapsed && isMobile ? '-translate-x-full' : 'translate-x-0'}`}>
+              <Sidebar isCollapsed={isCollapsed} setIsCollapsed={toggleSidebar} />
             </div>
             
             {/* メインコンテンツ */}

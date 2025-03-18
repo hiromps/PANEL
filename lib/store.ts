@@ -137,4 +137,77 @@ export const useBalanceStore = create<BalanceState>()(
       name: 'balance-storage',
     }
   )
+);
+
+// 連続ログイン状態の型定義
+interface LoginStreakState {
+  streak: number;              // 連続ログイン日数
+  lastLoginDate: string;       // 最後のログイン日（YYYY-MM-DD形式）
+  checkLoginStreak: () => void; // 連続ログインをチェックし更新する関数
+}
+
+// 日付をYYYY-MM-DD形式の文字列に変換する関数
+const formatDate = (date: Date): string => {
+  return date.toISOString().split('T')[0];
+};
+
+// 今日の日付をYYYY-MM-DD形式で取得
+const getTodayFormatted = (): string => {
+  return formatDate(new Date());
+};
+
+// 昨日の日付をYYYY-MM-DD形式で取得
+const getYesterdayFormatted = (): string => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return formatDate(yesterday);
+};
+
+// 連続ログイン情報を管理するストア
+export const useLoginStreakStore = create<LoginStreakState>()(
+  persist(
+    (set, get) => ({
+      streak: 0,
+      lastLoginDate: '',
+      
+      checkLoginStreak: () => {
+        const today = getTodayFormatted();
+        const yesterday = getYesterdayFormatted();
+        const { lastLoginDate, streak } = get();
+        
+        // すでに今日ログインしている場合は何もしない
+        if (lastLoginDate === today) {
+          return;
+        }
+        
+        // 初回ログインまたは連続ログインが途切れた場合
+        if (!lastLoginDate || (lastLoginDate !== yesterday && lastLoginDate !== today)) {
+          set({ 
+            streak: 1, 
+            lastLoginDate: today 
+          });
+          return;
+        }
+        
+        // 昨日ログインしていた場合、連続ログイン日数を増やす
+        if (lastLoginDate === yesterday) {
+          const newStreak = streak + 1;
+          set({ 
+            streak: newStreak, 
+            lastLoginDate: today 
+          });
+          
+          // 7日連続ログインでボーナス付与
+          if (newStreak % 7 === 0) {
+            // バランスストアからボーナス追加メソッドを呼び出す
+            const balanceStore = useBalanceStore.getState();
+            balanceStore.addFunds(100, `login-streak-bonus-${Date.now()}`);
+          }
+        }
+      }
+    }),
+    {
+      name: 'login-streak-storage',
+    }
+  )
 ); 
