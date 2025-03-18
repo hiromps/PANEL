@@ -56,8 +56,9 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem={true}
-          storageKey="duolingo-theme"
+          enableSystem={false}
+          storageKey="sgw-theme"
+          disableTransitionOnChange
         >
           <div className="relative flex h-screen overflow-hidden bg-background">
             {/* オーバーレイ：モバイルでサイドバーが開いている時だけ表示 */}

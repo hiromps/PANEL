@@ -75,7 +75,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
         `}</style>
         
         {/* 残高表示 */}
-        <div className="px-4 mb-2">
+        <div className="px-4 mb-2 mt-3">
           <div className="flex items-center space-x-2 bg-gray-100 dark:bg-[#2C3740] px-3 py-2 rounded-lg">
             <Wallet className="w-5 h-5 text-gray-600 dark:text-gray-400" />
             <div className="flex flex-col">
