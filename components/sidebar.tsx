@@ -1,9 +1,9 @@
 "use client";
 
-import { ShoppingBag, Package, Wrench, ClipboardList, HelpCircle, Wallet, Terminal, MessageSquare, ScrollText, Users, Bell, Crown } from 'lucide-react';
+import { ShoppingBag, Package, Wrench, ClipboardList, HelpCircle, Wallet, Terminal, MessageSquare, ScrollText, Users, Bell, Crown, X } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const menuItems = [
@@ -27,6 +27,18 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+  
   if (isCollapsed) {
     return null; // サイドバーが閉じているときは何も表示しない
   }
@@ -37,8 +49,18 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -250, opacity: 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="fixed top-16 left-0 bottom-0 w-64 bg-gray-50 dark:bg-[#1C2731] p-4 flex flex-col border-r dark:border-[#2C3740] z-20"
+      className={`w-64 bg-gray-50 dark:bg-[#1C2731] p-4 flex flex-col border-r dark:border-[#2C3740] h-full overflow-hidden ${isMobile ? 'pt-10' : 'pt-16'}`}
     >
+      {isMobile && (
+        <button
+          onClick={() => setIsCollapsed(true)}
+          className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 dark:hover:bg-[#2C3740] transition-colors"
+          aria-label="閉じる"
+        >
+          <X className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+        </button>
+      )}
+      
       <nav className="space-y-1 flex-1 overflow-y-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <style jsx>{`
           .scrollbar-hide::-webkit-scrollbar {
@@ -53,6 +75,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
               "flex items-center space-x-3 px-4 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2C3740] transition-colors group",
               index > 6 ? 'text-sm' : ''
             )}
+            onClick={() => isMobile && setIsCollapsed(true)}
           >
             <item.icon className={cn(
               "flex-shrink-0",
