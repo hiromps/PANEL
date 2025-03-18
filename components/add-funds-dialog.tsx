@@ -65,7 +65,7 @@ export function AddFundsDialog() {
         });
 
         // レスポンスの取得
-        let data;
+        let data: any;
         let responseText = '';
 
         try {
